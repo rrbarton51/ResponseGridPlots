@@ -411,15 +411,15 @@ outer <- function(unscaledDOE,outerd,innerd){
     legtext[d+1] = paste("min",ylab,"=",signif(minresp,digits=3))
     legtext[d+2] = paste("max",ylab,"=",signif(maxresp,digits=3))
   if(outerd==1){
-    legend(x=-1.2*pscale,y=.7*pscale,title = "Key", legend=legtext, 
+    legend("topleft",title = "Key", legend=legtext, 
            col=c(rep("white",d),rep("grey30",2)), pch=c(rep(19,d),20,19), 
            box.col="white",cex=.8)
   }else if(outerd==2){
-    legend(x=-2*pscale,y=.5*pscale,title = "Key", legend=legtext, 
+    legend("topleft",title = "Key", legend=legtext, 
            col=c(rep("white",d),rep("grey30",2)), pch=c(rep(19,d),20,19), 
            box.col="white",cex=.8)
     }else{ # outerd==3
-    legend(x=-1.8*pscale,y=2.6*pscale, title = "Key", inset=c(0,0), legend=legtext, 
+    legend("topleft", title = "Key", inset=c(0,0), legend=legtext, 
            col=c(rep("white",d),rep("grey30",2)), pch=c(rep(19,d),20,19),
            box.col="white",cex=.8)
   }

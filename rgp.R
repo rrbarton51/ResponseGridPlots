@@ -1,6 +1,9 @@
 # rgp.R
 # by Russell R. Barton, September 2025
-#
+#     updated for legend = topleft March 17 2026
+#     updated scaling and axis offsets, legend = left June 17 2026
+# Some rgp.R parameters have been adjusted from the original rgp2 code to 
+#  enhance plots used in the WSC 2026 RGP tutorial by Barton.
 # Given d and a function of x in R^d, construct a response-scaled design
 #  plot on a factorial grid with number of levels nlev[1] ... nlev[d] and 
 #  x limits xlo[1] ... xlo[d] and xhi[1] ... xhi[d]
@@ -259,6 +262,7 @@ outer <- function(unscaledDOE,outerd,innerd){
             circles=rep(2.5*spscale,ncol(DOEabc)),bty="n",xaxt="n",yaxt="n",
             xlab="",ylab="", bg="white",fg="white",inches = FALSE,
             xlim=c(-1.35*pscale,1.3*pscale),ylim=c(-.1*pscale,.1*pscale),
+            cex.main = .9,
             main = paste("Function ",fname),asp=1)
   } else if(outerd ==2){
     symbols(1.3*pscale*DOEabcS[1,1:ncol(DOEabc)]+ploc[1]-.05,
@@ -266,6 +270,7 @@ outer <- function(unscaledDOE,outerd,innerd){
             circles=rep(.9*pscale,ncol(DOEabc)),bty="n",xaxt="n",yaxt="n",
             xlab="",ylab="", bg="white",fg="white",,inches = FALSE,
             xlim=c(-1.7*pscale,1.4*pscale),ylim=c(-1.4*pscale,1.4*pscale),
+            cex.main = .9,
             main = paste("Function ",fname),asp=1)
   } else{ # outerd == 3
     symbols(1.1*pscale*DOEabcS[1,1:ncol(DOEabc)]+ploc[1]-.05,
@@ -273,6 +278,7 @@ outer <- function(unscaledDOE,outerd,innerd){
             circles=rep(.9*pscale,ncol(DOEabc)),bty="n",xaxt="n",yaxt="n",
             xlab="",ylab="", bg="white",fg="white",,inches = FALSE,
             xlim=c(-2.5*pscale,3.5*pscale),ylim=c(-1.5*pscale,2.5*pscale),
+            cex.main = .9,
             main = paste("Function ",fname),asp=1)
   }
   
@@ -411,17 +417,20 @@ outer <- function(unscaledDOE,outerd,innerd){
     legtext[d+1] = paste("min",ylab,"=",signif(minresp,digits=3))
     legtext[d+2] = paste("max",ylab,"=",signif(maxresp,digits=3))
   if(outerd==1){
-    legend("topleft",title = "Key", legend=legtext, 
+    #legend(x=-1.2*pscale,y=.7*pscale,title = "Key", legend=legtext,
+    legend("left",title = "Key", legend=legtext,
            col=c(rep("white",d),rep("grey30",2)), pch=c(rep(19,d),20,19), 
-           box.col="white",cex=.8)
+           box.col="white",cex=.9)
   }else if(outerd==2){
-    legend("topleft",title = "Key", legend=legtext, 
+    #legend(x=-2*pscale,y=.5*pscale,title = "Key", legend=legtext,
+    legend("left",title = "Key", legend=legtext,
            col=c(rep("white",d),rep("grey30",2)), pch=c(rep(19,d),20,19), 
-           box.col="white",cex=.8)
+           box.col="white",cex=.9)
     }else{ # outerd==3
-    legend("topleft", title = "Key", inset=c(0,0), legend=legtext, 
+    #legend(x=-1.8*pscale,y=2.6*pscale, title = "Key", inset=c(0,0), legend=legtext, 
+    legend("left", title = "Key", inset=c(0,0), legend=legtext, 
            col=c(rep("white",d),rep("grey30",2)), pch=c(rep(19,d),20,19),
-           box.col="white",cex=.8)
+           box.col="white",cex=.9)
   }
     # add inner subplots
     
@@ -573,8 +582,8 @@ inner <- function(innerDOE,outerd,innerd,ploc,spscale,rscale,cgray){
   
   # plot scaled response data (column 4) projected to x and z if innerd = 3
   #  and scaled and located - scale sResp to psResp to size circles for subplot
- if(innerd==2) psResp=.8*spscale*rscale*sqrt(sResp)
- if(innerd==3) psResp=.8*spscale*rscale*sqrt(sResp)
+ if(innerd==2) psResp = .8*spscale*rscale*sqrt(sResp)
+ if(innerd==3) psResp = spscale*rscale*sqrt(sResp)
  
   if(innerd ==1){
     symbols(spscale*DOExyzS[1,1:ncol(DOExyz)]+ploc[1],rep(0,ncol(DOExyz))+ploc[2],
@@ -604,12 +613,12 @@ inner <- function(innerDOE,outerd,innerd,ploc,spscale,rscale,cgray){
     text(((min(x0)+max(x0))/2)-.05*epsx,min(y0)-.3*epsy,plotnames[outerd+1],cex=1.5*tscale)
   }
   if(innerd == 2){
-    text(max(x1)+.2*epsx,+min(y0)+.5*epsy,plotnames[outerd+2],srt=90,cex=1.5*tscale)
+    text(max(x1)+.3*epsx,+min(y0)+.5*epsy,plotnames[outerd+2],srt=90,cex=1.5*tscale)
   }
   if(innerd == 3){
-    text(min(x0)+.28*epsx,min(y0)-.2*epsy,plotnames[outerd+1],cex=1.2*tscale)
-    text(max(x1)-.1*epsx,min(y0)-.035*epsy,plotnames[outerd+2],srt=40,cex=1.2*tscale)
-    text(max(x1)+.17*epsx,+min(y0)+.6*epsy,plotnames[outerd+3],srt=90,cex=1.2*tscale)
+    text(min(x0)+.28*epsx,min(y0)-.2*epsy,plotnames[outerd+1],cex=tscale)
+    text(max(x1)-.05*epsx,min(y0)-.035*epsy,plotnames[outerd+2],srt=40,cex=tscale)
+    text(max(x1)+.2*epsx,+min(y0)+.6*epsy,plotnames[outerd+3],srt=90,cex=tscale)
   }
   
 }
